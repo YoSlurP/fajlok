@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click</title>
+    <style>
+        body{
+            background-color: royalblue;
+            margin: 0px auto;
+        }
+        #jatek{
+            background-color: white;
+            border: black solid 5px;
+            padding: 10px;
+            font-size: 0pt;
+            width: 594px; height: 726px;
+            margin: 0px auto;
+        }
+        #jatek img{
+            border: 1px solid white;
+        }
+        #kep{
+            margin: 0px auto;
+            padding: 5px;
+            width: 594px;
+            vertical-align: middle;
+        }
+        #jobb{
+            float: right;
+            font-weight: bold;
+            
+        }
+        #bal{
+            font-weight: bold;
+            
+        }
+        .kepek{
+            vertical-align: middle;
+        }
+        #jatek img:hover{
+            border: 1px solid grey;
+        }
+    </style>
+    <script>
+        let t;
+        let add=1;
+        let clear=0;
+        function start(){
+            t=[];
+            let html="";
+            for(let s=0;s<11;s++){
+                let asd=[];
+                for(let o=0;o<9;o++){
+                    asd[o]="null"
+                    html+="<img src='null.png' onclick='katt("+s+","+o+");' id='s"+s+"o"+o+"'>"
+                }
+                t[s]=asd;
+            }
+            t[5][4]="add";
+            document.getElementById("jatek").innerHTML=html;
+            document.getElementById("s5o4").src="add.png"
+        }
+        function katt(s,o){
+            if(t[s][o]=="add"){
+                for(let ss=-1;ss<2;ss++){
+                    for(let oo=-1;oo<2;oo++){
+                        try{
+                            if(t[s+ss][o+oo] =="null"){
+                                if(Math.floor(Math.random()*2)==0){
+                                    t[s+ss][o+oo]="add"
+                                }else{
+                                    t[s+ss][o+oo]="clear"
+                                }
+                            }
+                        }catch(error){}
+                    }
+                }
+            }else if(t[s][o]=="clear"){
+                for(let ss=-1;ss<2;ss++){
+                    for(let oo=-1;oo<2;oo++){
+                        try{
+                            t[s+ss][o+oo]="null"
+                        }catch(error){}
+                    }
+                }
+            }
+            kiir();win();
+        }
+        function kiir(){
+            let html="";
+            add=0;
+            clear=0;
+            for(let s=0;s<11;s++){
+                for(let o=0;o<9;o++){
+                    if(t[s][o] =="add") add++;
+                    else if(t[s][o]=="clear")clear++;
+                    html+="<img src='"+t[s][o]+".png' onclick='katt("+s+","+o+");' id='s"+s+"o"+o+"'>"
+                }
+            }
+            document.getElementById("jatek").innerHTML=html;
+            document.getElementById("jobb").innerHTML=clear+"<img src='clear.png'>";
+            document.getElementById("bal").innerHTML="<img src='add.png'>"+add;
+
+        }
+        function win(){
+            if(add+clear==99){
+                window.open("https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZXd2eW1rN3BnM2Z3cGluaWJmczJmcjk0Y2lkM3VkYzFpaTFoNWR0aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xIBJDxVKgGvuINP7W0/giphy.gif");
+                start();    
+            }else if(add+clear==0){
+                window.open("https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExN29vZXdmZmR1YTF5aXZxcXljZXY5Nmcyb2lqdDVhYnA2Yzk4dXVpcSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/eJ4j2VnYOZU8qJU3Py/giphy.gif");
+                start();
+            }
+        }
+
+    </script>
+</head>
+<body onload="start();">
+    <div id="jatek"></div>
+    <div id="kep">
+        <span id="bal"><img class="kepek" src="add.png" alt=""> 0 </span>
+        <span></span>
+        <span id="jobb"> 0 <img class="kepek" src="clear.png" alt=""></span>
+        <a href=""></a>
+    </div>
+</body>
+</html>
