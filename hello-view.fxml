@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+
+<HBox xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flip.HelloController">
+   <children>
+      <Pane fx:id="pnJatek" prefHeight="512.0" prefWidth="768.0" style="-fx-border-color: grey;" />
+      <VBox alignment="CENTER">
+         <children>
+            <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/white.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lbSzam" text="db" />
+            <Label fx:id="lbSzaz" text="\%" />
+            <Label maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
+            <ImageView fitHeight="64.0" fitWidth="64.0" onMouseClicked="#onReloadClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/reload.png" />
+               </image>
+            </ImageView>
+            <HBox>
+               <children>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" onMouseClicked="#onPrevClick" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/prev32.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="level" text="0" />
+                  <ImageView fitHeight="32.0" fitWidth="32.0" onMouseClicked="#onNextClick" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/next32.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</HBox>
