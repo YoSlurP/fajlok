@@ -1,44 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
 
-<HBox xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flip.HelloController">
+<HBox xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.doga.HelloController">
    <children>
-      <Pane fx:id="pnJatek" prefHeight="512.0" prefWidth="768.0" style="-fx-border-color: grey;" />
+      <Pane fx:id="pnJatek" prefHeight="576.0" prefWidth="720.0" style="-fx-background-color: white; -fx-border-color: lightgrey;">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </Pane>
       <VBox alignment="CENTER">
          <children>
-            <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="ivUp" fitHeight="72.0" fitWidth="72.0" onMouseEntered="#hatter" onMouseExited="#vissza" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@icons/white.png" />
+                  <Image url="@iconU.png" />
                </image>
             </ImageView>
-            <Label fx:id="lbSzam" text="db" />
-            <Label fx:id="lbSzaz" text="\%" />
+            <Label fx:id="lbUp" text="0 db" />
+            <ImageView fx:id="ivRight" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@iconR.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lbRight" text="0 db" />
+            <ImageView fx:id="ivDown" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@iconD.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lbDown" text="0 db" />
+            <ImageView fx:id="ivLeft" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@iconL.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lbLeft" text="0 db" />
             <Label maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
-            <ImageView fitHeight="64.0" fitWidth="64.0" onMouseClicked="#onReloadClick" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="72.0" fitWidth="72.0" onMouseClicked="#reset" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@icons/reload.png" />
+                  <Image url="@kever.png" />
                </image>
             </ImageView>
-            <HBox>
-               <children>
-                  <ImageView fitHeight="32.0" fitWidth="32.0" onMouseClicked="#onPrevClick" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@icons/prev32.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="level" text="0" />
-                  <ImageView fitHeight="32.0" fitWidth="32.0" onMouseClicked="#onNextClick" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@icons/next32.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </HBox>
          </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
       </VBox>
    </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
 </HBox>

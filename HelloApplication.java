@@ -1,4 +1,4 @@
-package com.example.flip;
+package com.example.doga;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,8 +13,8 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("icons/red.png")));
-        stage.setTitle("Flip");
+        stage.setTitle("Gömbök");
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("iconU.png")));
         stage.setScene(scene);
         stage.show();
     }

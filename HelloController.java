@@ -1,4 +1,4 @@
-package com.example.flip;
+package com.example.doga;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -7,139 +7,127 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-import java.io.File;
-import java.util.Scanner;
-
 public class HelloController {
+    @FXML
+    private Pane pnJatek;
+    @FXML
+    private Label lbUp;
+    @FXML
+    private Label lbRight;
+    @FXML
+    private Label lbDown;
+    @FXML
+    private Label lbLeft;
 
-    @FXML private Pane pnJatek;
-    @FXML private Label lbSzam;
-    @FXML private Label lbSzaz;
-    @FXML private Label level;
 
-    private int[]tomb = {1,2,3,4,5};
-    private int cur = 0;
+    private Label[][] lbtomb = new Label[8][10];
+    private char[][] chtomb = new char[8][10];
+    public char[] f = {'U', 'R', 'D', 'L'};
 
 
-    private Label[][] lbTomb = new Label[8][12];
-    private char[][] cTomb = new char[8][12];
-
-    public void initialize(){
-
-        for (int i = 0; i < 8; i++){ for (int j = 0; j < 12; j++) {
-                lbTomb[i][j] = new Label();
-                lbTomb[i][j].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("icons/white.png"))));
-                lbTomb[i][j].setTranslateY(i*64);
-                lbTomb[i][j].setTranslateX(j*64);
-                int ii = i; int jj = j;
-                lbTomb[i][j].setStyle("-fx-background-color: white;");
-                lbTomb[i][j].setOnMouseEntered(e -> lbTomb[ii][jj].setStyle("-fx-background-color: lightgrey;"));
-                lbTomb[i][j].setOnMouseExited(e -> lbTomb[ii][jj].setStyle("-fx-background-color: white;"));
-                lbTomb[i][j].setOnMouseClicked(e -> katt(ii, jj));
-                cTomb[i][j] = 'W';
-                pnJatek.getChildren().add(lbTomb[i][j]);
+    public void initialize() {
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 10; y++) {
+                lbtomb[x][y] = new Label();
+                int random = (int) (Math.random() * 4);
+                lbtomb[x][y].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("icon" + f[random] + ".png"))));
+                chtomb[x][y] = f[random];
+                lbtomb[x][y].setTranslateX(y * 72);
+                lbtomb[x][y].setTranslateY(x * 72);
+                int xx = x;
+                int yy = y;
+                lbtomb[x][y].setOnMouseEntered(e -> lbtomb[xx][yy].setStyle("-fx-background-color:lightblue;"));
+                lbtomb[x][y].setOnMouseExited(e -> lbtomb[xx][yy].setStyle("-fx-background-color:white;"));
+                lbtomb[x][y].setOnMouseClicked(e -> katt(xx, yy));
+                pnJatek.getChildren().add(lbtomb[x][y]);
             }
         }
-        load("level"+tomb[cur]+".txt");
-        level.setText(tomb[cur]+"");
-        szamol();
+        count();
     }
 
-    private void katt(int ii, int jj){
-        for (int i = 0; i < 8; i++) {
-            if (cTomb[i][jj] == 'W') {
-                cTomb[i][jj] = 'R';
-                lbTomb[i][jj].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("icons/red.png"))));
-            }
-            else {
-                cTomb[i][jj] = 'W';
-                lbTomb[i][jj].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("icons/white.png"))));
-            }
+    public void katt(int xx, int yy) {
+        int rand = (int) (Math.random() * 4);
+        if (xx > 0 && chtomb[xx][yy] == 'U') {
+            lbtomb[xx - 1][yy].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("icon" + f[rand] + ".png"))));
+            chtomb[xx - 1][yy] = f[rand];
+        } else if (yy < 9 && chtomb[xx][yy] == 'R') {
+            lbtomb[xx][yy + 1].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("icon" + f[rand] + ".png"))));
+            chtomb[xx][yy + 1] = f[rand];
+        } else if (xx < 7 && chtomb[xx][yy] == 'D') {
+            lbtomb[xx + 1][yy].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("icon" + f[rand] + ".png"))));
+            chtomb[xx + 1][yy] = f[rand];
+        } else if (yy > 0 && chtomb[xx][yy] == 'L') {
+            lbtomb[xx][yy - 1].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("icon" + f[rand] + ".png"))));
+            chtomb[xx][yy - 1] = f[rand];
         }
-        for (int j = 0; j < 12; j++) {
-            if (cTomb[ii][j] == 'W') {
-                cTomb[ii][j] = 'R';
-                lbTomb[ii][j].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("icons/red.png"))));
-            }
-            else {
-                cTomb[ii][j] = 'W';
-                lbTomb[ii][j].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("icons/white.png"))));
-            }
-        }
-        if (cTomb[ii][jj] == 'W') {
-            cTomb[ii][jj] = 'R';
-            lbTomb[ii][jj].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("icons/red.png"))));
-        }
-        else {
-            cTomb[ii][jj] = 'W';
-            lbTomb[ii][jj].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("icons/white.png"))));
-        }
-        szamol();
+
+        count();
+        win();
     }
 
-
-    private void load(String s){
+    public void reset() {
         pnJatek.getChildren().clear();
-        Scanner in = null;
-        try{
-            in = new Scanner(new File("levels/"+s), "utf-8");
-            int x = 0;
-            while (in.hasNext()){
-                String[] t = in.nextLine().split("");
-                for (int j = 0; j < 12; j++){
-                    cTomb[x][j] = t[j].charAt(0);
+        initialize();
+    }
+
+    int up = 0;
+    int right = 0;
+    int down = 0;
+    int left = 0;
+
+    public void count() {
+        up = 0;
+        right = 0;
+        down = 0;
+        left = 0;
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 10; y++) {
+                if (chtomb[x][y] == 'U') {
+                    up++;
+                    lbUp.setText(up + " db");
+                } else if (chtomb[x][y] == 'R') {
+                    right++;
+                    lbRight.setText(right + " db");
+                } else if (chtomb[x][y] == 'D') {
+                    down++;
+                    lbDown.setText(down + " db");
+                } else if (chtomb[x][y] == 'L') {
+                    left++;
+                    lbLeft.setText(left + " db");
                 }
-                x++;
             }
-            for (int i = 0; i < 8; i++){ for (int j = 0; j < 12; j++) {
-                if (cTomb[i][j] == 'W') lbTomb[i][j].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("icons/white.png"))));
-                else lbTomb[i][j].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("icons/red.png"))));
-                pnJatek.getChildren().add(lbTomb[i][j]);
-            }
-            }
-        }catch (Exception e){
-            System.out.println(e);
-        }finally {
-            if (in != null) in.close();
+        }
+    }
+
+    public void win() {
+        if (up == down && left == right && left == up) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Mindegyikből azonos számú van!");
+            alert.setTitle("Gömbök");
+            alert.setHeaderText(null);
+            alert.showAndWait();
         }
     }
 
+    public void hatter() {
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 10; y++) {
+                if(chtomb[x][y]=='U'){
+                    lbtomb[x][y].setStyle("-fx-background-color:orange;");
+                }
 
-
-    private void szamol(){
-        int k = 0;
-        for (int i = 0; i < 8; i++){ for (int j = 0; j < 12; j++) {
-                if (cTomb[i][j] == 'W') k++;
             }
         }
-        lbSzam.setText(k+" db");
-        lbSzaz.setText(((k*100)/96)+" %");
-        if (((k*100)/96) == 100){
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setHeaderText(null);
-            a.setContentText("Pálya teljesítve!");
-            a.setTitle("Flip");
-            a.showAndWait();
+
+    }
+    public void vissza(){
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 10; y++) {
+                if(chtomb[x][y]=='U'){
+                    lbtomb[x][y].setStyle("-fx-background-color:white;");
+                }
+
+            }
         }
-    }
-
-    @FXML private void onReloadClick(){
-        load("level"+tomb[cur]+".txt");
-        level.setText(tomb[cur]+"");
-        szamol();
-    }
-
-    @FXML private void onPrevClick(){
-        if (cur > 0) cur--;
-        load("level"+tomb[cur]+".txt");
-        level.setText(tomb[cur]+"");
-        szamol();
-    }
-
-    @FXML private void onNextClick(){
-        if (cur < tomb.length-1) cur++;
-        load("level"+tomb[cur]+".txt");
-        level.setText(tomb[cur]+"");
-        szamol();
     }
 }
